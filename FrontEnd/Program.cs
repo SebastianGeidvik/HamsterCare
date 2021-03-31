@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BackEnd;
+using System;
+using System.Linq;
 
 namespace FrontEnd
 {
@@ -6,6 +8,9 @@ namespace FrontEnd
     {
         static void Main(string[] args)
         {
+            var dbContext = new DaycareContext();
+            var cage = new Cage();
+            dbContext.Cages.Add(cage);
         }
     }
 }

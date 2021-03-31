@@ -9,6 +9,21 @@ namespace BackEnd
     public class Cage
     {
         public int Id { get; set; }
-        protected virtual ICollection<Hamster> Hamsters { get; set; }
+        public virtual ICollection<Hamster> Hamsters { get; set; }
+
+        public bool AddHamster(Hamster hamster)
+        {
+            if (Hamsters == null)
+            {
+                Hamsters.Add(hamster);
+                return true;
+            }
+            else if (Hamsters.Count < 3)
+            {
+                Hamsters.Add(hamster);
+                return true;
+            }
+            return false;
+        }
     }
 }
