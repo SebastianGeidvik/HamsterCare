@@ -13,5 +13,6 @@ namespace BackEnd
         public string Name { get; set; }
         public int Age { get; set; }
         public Gender Gender { get; set; }
+        public string Owner { get; set; }
     }
 }
