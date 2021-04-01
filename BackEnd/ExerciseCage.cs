@@ -10,6 +10,5 @@ namespace BackEnd
     {
         public int Id { get; set; }
         public virtual ICollection<Hamster> Hamsters { get; set; }
-
     }
 }

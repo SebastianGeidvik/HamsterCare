@@ -8,7 +8,8 @@ namespace FrontEnd
     {
         static void Main(string[] args)
         {
-
+            var readFile = new ReadFromFile();
+            readFile.ImportFile();
         }
     }
 }

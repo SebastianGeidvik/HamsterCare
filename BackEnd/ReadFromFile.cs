@@ -9,7 +9,7 @@ namespace BackEnd
 {
     public class ReadFromFile
     {
-        public void ReadFile()
+        public void ImportFile()
         {
             var csvLines = File.ReadAllLines(@"C:\Users\myzci\source\repos\HamsterCare\BackEnd\Seed\Hamsterlista30.csv");
 
@@ -24,14 +24,17 @@ namespace BackEnd
                 {
                     hamster.Gender = Gender.Male;
                 }
-                else
+                else if (values[2] == "K")
                 {
                     hamster.Gender = Gender.Female;
                 }
                 hamster.Owner = (values[3]);
+
+                Console.WriteLine(hamster.Name);
+                Console.WriteLine(hamster.Age + " Månader");
+                Console.WriteLine(hamster.Gender);
+                Console.WriteLine(hamster.Owner);
             }
         }
     }
 }
-
-
