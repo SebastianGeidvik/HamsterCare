@@ -14,5 +14,13 @@ namespace BackEnd
         public int Age { get; set; }
         public Gender Gender { get; set; }
         public string Owner { get; set; }
+
+        //public Hamster(string name, int age, Gender gender, string owner )
+        //{
+        //    Name = name;
+        //    Age = age;
+        //    Gender = gender;
+        //    Owner = owner;
+        //}
     }
 }

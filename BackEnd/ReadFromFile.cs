@@ -9,7 +9,7 @@ namespace BackEnd
 {
     public class ReadFromFile
     {
-        public void ImportFile()
+        public void ImportHamsters()
         {
             var csvLines = File.ReadAllLines(@"C:\Users\myzci\source\repos\HamsterCare\BackEnd\Seed\Hamsterlista30.csv");
 
@@ -30,10 +30,9 @@ namespace BackEnd
                 }
                 hamster.Owner = (values[3]);
 
-                Console.WriteLine(hamster.Name);
-                Console.WriteLine(hamster.Age + " Månader");
-                Console.WriteLine(hamster.Gender);
-                Console.WriteLine(hamster.Owner);
+                var dbContext = new DaycareContext();
+                dbContext.Hamsters.Add(new Hamster() { Name = hamster.Name, Age = hamster.Age, Gender = hamster.Gender, Owner = hamster.Owner });
+                dbContext.SaveChanges();
             }
         }
     }

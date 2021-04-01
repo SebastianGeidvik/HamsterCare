@@ -8,8 +8,12 @@ namespace FrontEnd
     {
         static void Main(string[] args)
         {
-            var readFile = new ReadFromFile();
-            readFile.ImportFile();
+            var dbContext = new DaycareContext();
+            var cage = new Cage();
+            cage.AddHamster(dbContext.Hamsters.First());
+            dbContext.SaveChanges();
+
+
         }
     }
 }

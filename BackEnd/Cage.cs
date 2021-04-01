@@ -23,7 +23,10 @@ namespace BackEnd
                 Hamsters.Add(hamster);
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
     }
 }
