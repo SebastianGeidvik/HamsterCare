@@ -10,5 +10,14 @@ namespace BackEnd
     {
         public int Id { get; set; }
         public virtual ICollection<Hamster> Hamsters { get; set; }
+
+        public static void GoExercise()
+        {
+            var dbContext = new DaycareContext();
+            foreach (var hamster in dbContext.Hamsters)
+            {
+                
+            }
+        }
     }
 }
