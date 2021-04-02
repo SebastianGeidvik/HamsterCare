@@ -9,7 +9,7 @@ namespace BackEnd
 {
     public class ReadFromFile
     {
-        public void ImportHamsters()
+        public static void ImportHamsters()
         {
             var dbContext = new DaycareContext();
             if (dbContext.Hamsters.Count() == 0)
