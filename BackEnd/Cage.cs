@@ -28,5 +28,17 @@ namespace BackEnd
                 return false;
             }
         }
+        public void CreateCage()
+        {
+            var dbContext = new DaycareContext();
+
+            if (dbContext.Cages.Count() == 0)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    dbContext.Cages.Add(new Cage());
+                }
+            }
+        }
     }
 }
