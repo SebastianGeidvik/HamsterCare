@@ -15,46 +15,43 @@ namespace BackEnd
         {
             var dbContext = new DaycareContext();
 
-            if (dbContext.Cages.Count() == 0)
-            {
-                var maleHamsterQueue = new Queue<Hamster>();
-                var femaleHamsterQueue = new Queue<Hamster>();
+            var maleHamsterQueue = new Queue<Hamster>();
+            var femaleHamsterQueue = new Queue<Hamster>();
 
-                foreach (var hamster in dbContext.Hamsters)
+            foreach (var hamster in dbContext.Hamsters)
+            {
+                if (hamster.Gender == Gender.Female)
                 {
-                    if (hamster.Gender == Gender.Female)
-                    {
-                        femaleHamsterQueue.Enqueue(hamster);
-                    }
-                    else if (hamster.Gender == Gender.Male)
-                    {
-                        maleHamsterQueue.Enqueue(hamster);
-                    }
+                    femaleHamsterQueue.Enqueue(hamster);
                 }
-                foreach (var cage in dbContext.Cages)
+                else if (hamster.Gender == Gender.Male)
                 {
-                    if (maleHamsterQueue.Count > 0)
-                    {
-                        for (int i = 0; i < 3; i++)
-                        {
-                            var hamster = maleHamsterQueue.Dequeue();
-                            cage.Hamsters.Add(hamster);
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 3; i++)
-                        {
-                            var hamster = femaleHamsterQueue.Dequeue();
-                            cage.Hamsters.Add(hamster);
-                        }
-                    }
+                    maleHamsterQueue.Enqueue(hamster);
                 }
-                dbContext.SaveChanges();
             }
+            foreach (var cage in dbContext.Cages)
+            {
+                if (maleHamsterQueue.Count > 0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        var hamster = maleHamsterQueue.Dequeue();
+                        cage.Hamsters.Add(hamster);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        var hamster = femaleHamsterQueue.Dequeue();
+                        cage.Hamsters.Add(hamster);
+                    }
+                }
+            }
+            dbContext.SaveChanges();
             return true;
         }
-        public void CreateCage()
+        public static void CreateCage()
         {
             var dbContext = new DaycareContext();
 
@@ -65,6 +62,7 @@ namespace BackEnd
                     dbContext.Cages.Add(new Cage());
                 }
             }
+            dbContext.SaveChanges();
         }
         public void CheckOutHamsters()
         {

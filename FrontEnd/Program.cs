@@ -8,8 +8,12 @@ namespace FrontEnd
     {
         static void Main(string[] args)
         {
+            Cage.CreateCage();
+            ExerciseCage.CreateExerciseCage();
+            ReadFromFile.ImportHamsters();
             Cage.FillCages();
-            
+            ExerciseCage.Exercise();
+
         }
     }
 }
