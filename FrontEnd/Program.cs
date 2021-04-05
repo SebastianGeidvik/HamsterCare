@@ -12,8 +12,8 @@ namespace FrontEnd
             //ExerciseCage.CreateExerciseCage();
             //ReadFromFile.ImportHamsters();
             //Cage.FillCages();
-            //ExerciseCage.Exercise();
-            ExerciseCage.GoToCage();
+            ExerciseCage.Exercise();
+            //ExerciseCage.GoToCage();
 
         }
     }

@@ -21,12 +21,16 @@ namespace BackEnd
         {
             var dbContext = new DaycareContext();
             var exerciseCage = dbContext.ExerciseCages.First();
-            Gender gender = Gender.Male;
+            Gender gender = Gender.Unspecified;
             int counter = 0;
             foreach (var cage in dbContext.Cages)
             {
                 foreach (var hamster in cage.Hamsters)
                 {
+                    if (counter == 0)
+                    {
+                        gender = hamster.Gender;
+                    }
                     if (hamster.Gender == gender && counter < 6)
                     {
                         exerciseCage.Hamsters.Add(hamster);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BackEnd
 {
-    public enum Gender { Male, Female};
+    public enum Gender { Male, Female, Unspecified };
     public class Hamster
     {
         public int Id { get; set; }
