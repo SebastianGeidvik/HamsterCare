@@ -17,7 +17,6 @@ namespace BackEnd
             dbContext.ExerciseCages.Add(new ExerciseCage());
             dbContext.SaveChanges();
         }
-
         public static void Exercise()
         {
             var dbContext = new DaycareContext();
@@ -37,28 +36,6 @@ namespace BackEnd
                 }
             }
             dbContext.SaveChanges();
-            //var hamsterQueue = new Queue<Hamster>();
-
-            //foreach (var hamster in dbContext.Hamsters)
-            //{
-            //        hamsterQueue.Enqueue(hamster);
-            //}
-            //foreach (var exerciseCage in dbContext.ExerciseCages)
-            //{
-            //    for (int i = 0; i < 6; i++)
-            //    {
-            //        var hamster = hamsterQueue.Dequeue();
-            //        foreach (var cage in dbContext.Cages)
-            //        {
-            //            if (cage.Hamsters.Contains(hamster))
-            //            {
-            //                cage.Hamsters.Remove(hamster);
-            //            }
-            //        }
-            //        exerciseCage.Hamsters.Add(hamster);
-            //    }
-            //}
-            //dbContext.SaveChanges();
         }
     }
 }
