@@ -16,10 +16,10 @@ namespace BackEnd
         public Activity Activity  { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public Log(Activity activity, DateTime date)
+        public Log(DateTime timeStamp, Activity activity)
         {
+            TimeStamp = timeStamp;
             Activity = activity;
-            TimeStamp = date;
         }
     }
 }

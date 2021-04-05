@@ -16,6 +16,5 @@ namespace BackEnd
         public string Owner { get; set; }
         public DateTime CheckedIn { get; set; }
         public virtual ICollection<Log> Logs { get; set; }
-
     }
 }

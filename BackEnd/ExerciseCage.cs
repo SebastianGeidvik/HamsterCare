@@ -30,6 +30,7 @@ namespace BackEnd
                     if (hamster.Gender == gender && counter < 6)
                     {
                         exerciseCage.Hamsters.Add(hamster);
+                        hamster.Logs.Add(new Log(DateTime.Now, Activity.Exercise));
                         cage.Hamsters.Remove(hamster);
                         counter++;
                     }
