@@ -37,5 +37,20 @@ namespace BackEnd
             }
             dbContext.SaveChanges();
         }
+        public static void GoToCage()
+        {
+            var dbContext = new DaycareContext();
+
+            foreach (var cage in dbContext.ExerciseCages)
+            {
+                foreach (var hamster in cage.Hamsters)
+                {
+                    var freeCage = dbContext.Cages.First(c => c.Hamsters.Count < 3);
+                    freeCage.Hamsters.Add(hamster);
+                    cage.Hamsters.Remove(hamster);
+                }
+            }
+            dbContext.SaveChanges();
+        }
     }
 }

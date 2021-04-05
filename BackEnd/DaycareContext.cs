@@ -18,5 +18,6 @@ namespace BackEnd
         public DbSet<Hamster> Hamsters { get; set; }
         public DbSet<Cage> Cages { get; set; }
         public DbSet<ExerciseCage> ExerciseCages { get; set; }
+        public DbSet<Log> Logs { get; set; }
     }
 }
