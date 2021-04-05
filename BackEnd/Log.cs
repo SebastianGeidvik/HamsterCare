@@ -15,6 +15,7 @@ namespace BackEnd
         public int Id { get; set; }
         public Activity Activity  { get; set; }
         public DateTime TimeStamp { get; set; }
+        public virtual Hamster Hamster { get; set; }
 
         public Log(DateTime timeStamp, Activity activity)
         {
