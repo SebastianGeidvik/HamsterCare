@@ -15,5 +15,8 @@ namespace BackEnd
         public Gender Gender { get; set; }
         public string Owner { get; set; }
         public DateTime CheckedIn { get; set; }
+
+        public virtual ICollection<Log> Logs { get; set; }
+
     }
 }
