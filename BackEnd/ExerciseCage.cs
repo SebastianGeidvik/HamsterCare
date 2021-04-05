@@ -48,6 +48,7 @@ namespace BackEnd
                 {
                     var freeCage = dbContext.Cages.First(c => c.Hamsters.Count < 3);
                     freeCage.Hamsters.Add(hamster);
+                    hamster.Logs.Add(new Log(DateTime.Now, Activity.InCage));
                     cage.Hamsters.Remove(hamster);
                 }
             }

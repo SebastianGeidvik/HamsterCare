@@ -12,7 +12,9 @@ namespace FrontEnd
             //ExerciseCage.CreateExerciseCage();
             //ReadFromFile.ImportHamsters();
             //Cage.FillCages();
-            ExerciseCage.Exercise();
+            //ExerciseCage.Exercise();
+            ExerciseCage.GoToCage();
+
         }
     }
 }
