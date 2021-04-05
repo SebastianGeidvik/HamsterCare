@@ -80,29 +80,6 @@ namespace BackEnd.Migrations
                     b.ToTable("Hamsters");
                 });
 
-            modelBuilder.Entity("BackEnd.Log", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Activity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HamsterId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HamsterId");
-
-                    b.ToTable("Logs");
-                });
-
             modelBuilder.Entity("BackEnd.Hamster", b =>
                 {
                     b.HasOne("BackEnd.Cage", null)
@@ -114,13 +91,6 @@ namespace BackEnd.Migrations
                         .HasForeignKey("ExerciseCageId");
                 });
 
-            modelBuilder.Entity("BackEnd.Log", b =>
-                {
-                    b.HasOne("BackEnd.Hamster", null)
-                        .WithMany("Logs")
-                        .HasForeignKey("HamsterId");
-                });
-
             modelBuilder.Entity("BackEnd.Cage", b =>
                 {
                     b.Navigation("Hamsters");
@@ -129,11 +99,6 @@ namespace BackEnd.Migrations
             modelBuilder.Entity("BackEnd.ExerciseCage", b =>
                 {
                     b.Navigation("Hamsters");
-                });
-
-            modelBuilder.Entity("BackEnd.Hamster", b =>
-                {
-                    b.Navigation("Logs");
                 });
 #pragma warning restore 612, 618
         }

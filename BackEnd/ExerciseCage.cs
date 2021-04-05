@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simulator;
 
 namespace BackEnd
 {
@@ -20,7 +19,6 @@ namespace BackEnd
         }
         public static void Exercise()
         {
-            Simulator.Simulator.Date = DateTime.Now;
             var dbContext = new DaycareContext();
             var exerciseCage = dbContext.ExerciseCages.First();
             Gender gender = Gender.Male;
@@ -32,8 +30,6 @@ namespace BackEnd
                     if (hamster.Gender == gender && counter < 6)
                     {
                         exerciseCage.Hamsters.Add(hamster);
-                        var date = Simulator.Simulator.Date;
-                        hamster.Logs.Add(new Log(Activity.Exercise, date));
                         cage.Hamsters.Remove(hamster);
                         counter++;
                     }
