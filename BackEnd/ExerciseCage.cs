@@ -65,18 +65,18 @@ namespace BackEnd
             }
             dbContext.SaveChanges();
         }
-        public static void CountHamsterExercise()
-        {
-            var dbContext = new DaycareContext();
-            var query = from Hamster in dbContext.Hamsters.ToList()
-                        group Hamster by Hamster into HamsterGroup
-                        orderby HamsterGroup.Key.Logs.Count ascending
-                        select new { HamsterId = HamsterGroup.Key.Id, HamsterName = HamsterGroup.Key.Name, Hamsterlogs = HamsterGroup.Key.Logs.Where(l => l.Activity == Activity.Exercise).Count() };
+        //public static void CountHamsterExercise()
+        //{
+        //    var dbContext = new DaycareContext();
+        //    var query = from Hamster in dbContext.Hamsters.ToList()
+        //                group Hamster by Hamster into HamsterGroup
+        //                orderby HamsterGroup.Key.Logs.Count ascending
+        //                select new { HamsterId = HamsterGroup.Key.Id, HamsterName = HamsterGroup.Key.Name, Hamsterlogs = HamsterGroup.Key.Logs.Where(l => l.Activity == Activity.Exercise).Count() };
 
-            foreach (var group in query)
-            {
-                Console.WriteLine(group.HamsterId + " " + group.HamsterName + " " + group.Hamsterlogs);
-            }
+        //    foreach (var group in query)
+        //    {
+        //        Console.WriteLine(group.HamsterId + " " + group.HamsterName + " " + group.Hamsterlogs);
+        //    }
 
             //var hamsterQuery = dbContext.Hamsters.ToList()
             //    .GroupBy(h => h)
@@ -85,6 +85,6 @@ namespace BackEnd
             //        ExerciseCount = g.Key.Logs
             //    .Where(l => l.Activity == Activity.Exercise).Count()
             //    });
-        }
+        //}
     }
 }

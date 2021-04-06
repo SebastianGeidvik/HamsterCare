@@ -9,8 +9,9 @@ namespace FrontEnd
     {
         static void Main(string[] args)
         {
-            var simulator = new Simulator.Simulator(10, 2);
-            simulator.TimerMethod();
+            StartUpDatabase.CreateDatabase();
+            var simulator = new Simulator.Simulator(100, 2);
+            simulator.RunSimulator();
             Console.ReadKey();
         }
     }

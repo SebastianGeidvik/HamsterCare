@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BackEnd;
 
 namespace Simulator
 {
     public class Simulator
     {
         public int TickCounter { get; set; }
-        public DateTime Date { get; set; }
+        public static DateTime Date { get; set; }
         public int SleepTime { get; set; }
         public int InputDay { get; set; }
         public int DaysPassed { get; set; }
@@ -20,7 +23,7 @@ namespace Simulator
             InputDay = days;
             DaysPassed = 0;
         }
-        public void TimerMethod()
+        public void RunSimulator()
         {
             Task.Run(() =>
             {
@@ -42,6 +45,15 @@ namespace Simulator
         }
         public void OnTick()
         {
+            if (TickCounter == 0)
+            {
+                Operations.FillCages();
+            }
+            if (TickCounter == 100)
+            {
+                ExerciseCage.GoToCage();
+                Operations.CheckOutHamsters();
+            }
             Console.WriteLine($"Ticks: {TickCounter} Date: {Date}");
         }
     }
