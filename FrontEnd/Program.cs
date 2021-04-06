@@ -15,7 +15,8 @@ namespace FrontEnd
             //Cage.FillCages();
             //ExerciseCage.Exercise();
             //ExerciseCage.GoToCage();
-            var simulator = new Simulator.Simulator();
+            var simulator = new Simulator.Simulator(100, 2);
+            simulator.TimerMethod();
             Console.ReadKey();
         }
     }
