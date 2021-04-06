@@ -9,13 +9,7 @@ namespace FrontEnd
     {
         static void Main(string[] args)
         {
-            //Cage.CreateCage();
-            //ExerciseCage.CreateExerciseCage();
-            //ReadFromFile.ImportHamsters();
-            //Cage.FillCages();
-            //ExerciseCage.Exercise();
-            //ExerciseCage.GoToCage();
-            var simulator = new Simulator.Simulator(100, 2);
+            var simulator = new Simulator.Simulator(10, 2);
             simulator.TimerMethod();
             Console.ReadKey();
         }

@@ -51,19 +51,7 @@ namespace BackEnd
             dbContext.SaveChanges();
             return true;
         }
-        public static void CreateCage()
-        {
-            var dbContext = new DaycareContext();
-
-            if (dbContext.Cages.Count() == 0)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    dbContext.Cages.Add(new Cage());
-                }
-            }
-            dbContext.SaveChanges();
-        }
+        
         public void CheckOutHamsters()
         {
             var dbContext = new DaycareContext();

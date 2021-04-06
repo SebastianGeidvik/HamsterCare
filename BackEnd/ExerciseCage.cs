@@ -11,12 +11,6 @@ namespace BackEnd
         public int Id { get; set; }
         public virtual ICollection<Hamster> Hamsters { get; set; }
 
-        public static void CreateExerciseCage()
-        {
-            var dbContext = new DaycareContext();
-            dbContext.ExerciseCages.Add(new ExerciseCage());
-            dbContext.SaveChanges();
-        }
         public static void Exercise()
         {
             var dbContext = new DaycareContext();

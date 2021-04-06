@@ -7,14 +7,19 @@ using System.Threading.Tasks;
 
 namespace BackEnd
 {
-    public class ReadFromFile
+    public class StartUpDatabase
     {
+        public static void CreateDatabase()
+        {
+            ImportHamsters();
+            CreateCages();
+            CreateExerciseCage();
+        }
         public static void ImportHamsters()
         {
             var dbContext = new DaycareContext();
             if (dbContext.Hamsters.Count() == 0)
             {
-                //var csvLines = File.ReadAllLines(@"C:\Users\myzci\source\repos\HamsterCare\BackEnd\Seed\Hamsterlista30.csv");
                 var csvLines = File.ReadAllLines(@"..\net5.0\SeedFromFile\Hamsterlista30.csv");
 
                 foreach (var csvLine in csvLines)
@@ -33,10 +38,32 @@ namespace BackEnd
                         hamster.Gender = Gender.Female;
                     }
                     hamster.Owner = (values[3]);
-                    
+
                     dbContext.Hamsters.Add(new Hamster() { Name = hamster.Name, Age = hamster.Age, Gender = hamster.Gender, Owner = hamster.Owner });
                     dbContext.SaveChanges();
                 }
+            }
+        }
+        public static void CreateCages()
+        {
+            var dbContext = new DaycareContext();
+
+            if (dbContext.Cages.Count() == 0)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    dbContext.Cages.Add(new Cage());
+                }
+            }
+            dbContext.SaveChanges();
+        }
+        public static void CreateExerciseCage()
+        {
+            var dbContext = new DaycareContext();
+            if (dbContext.ExerciseCages.Count() == 0)
+            {
+                dbContext.ExerciseCages.Add(new ExerciseCage());
+                dbContext.SaveChanges();
             }
         }
     }
