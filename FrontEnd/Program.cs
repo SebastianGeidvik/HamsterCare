@@ -1,6 +1,7 @@
 ﻿using BackEnd;
 using System;
 using System.Linq;
+using Simulator;
 
 namespace FrontEnd
 {
@@ -12,9 +13,10 @@ namespace FrontEnd
             //ExerciseCage.CreateExerciseCage();
             //ReadFromFile.ImportHamsters();
             //Cage.FillCages();
-            ExerciseCage.Exercise();
+            //ExerciseCage.Exercise();
             //ExerciseCage.GoToCage();
-
+            var simulator = new Simulator.Simulator();
+            Console.ReadKey();
         }
     }
 }

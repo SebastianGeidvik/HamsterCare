@@ -20,24 +20,37 @@ namespace BackEnd
         public static void Exercise()
         {
             var dbContext = new DaycareContext();
+
+            var query = from Hamster in dbContext.Hamsters.ToList()
+                        group Hamster by Hamster into HamsterGroup
+                        orderby HamsterGroup.Key.Logs.Count ascending
+                        select new { Hamster = HamsterGroup.Key, ExerciseCount = HamsterGroup.Key.Logs.Where(l => l.Activity == Activity.Exercise).Count() };
+
             var exerciseCage = dbContext.ExerciseCages.First();
             Gender gender = Gender.Unspecified;
             int counter = 0;
-            foreach (var cage in dbContext.Cages)
+
+            foreach (var group in query)
             {
-                foreach (var hamster in cage.Hamsters)
+                if (counter == 0)
                 {
-                    if (counter == 0)
+                    gender = group.Hamster.Gender;
+                }
+                if (group.Hamster.Gender == gender && counter < 6)
+                {
+                    foreach (var cage in dbContext.Cages)
                     {
-                        gender = hamster.Gender;
+                        foreach (var hamster in dbContext.Hamsters)
+                        {
+                            if (hamster == group.Hamster)
+                            {
+                                cage.Hamsters.Remove(hamster);
+                            }
+                        }
                     }
-                    if (hamster.Gender == gender && counter < 6)
-                    {
-                        exerciseCage.Hamsters.Add(hamster);
-                        hamster.Logs.Add(new Log(DateTime.Now, Activity.Exercise));
-                        cage.Hamsters.Remove(hamster);
-                        counter++;
-                    }
+                    exerciseCage.Hamsters.Add(group.Hamster);
+                    group.Hamster.Logs.Add(new Log(DateTime.Now, Activity.Exercise));
+                    counter++;
                 }
             }
             dbContext.SaveChanges();
@@ -57,6 +70,27 @@ namespace BackEnd
                 }
             }
             dbContext.SaveChanges();
+        }
+        public static void CountHamsterExercise()
+        {
+            var dbContext = new DaycareContext();
+            var query = from Hamster in dbContext.Hamsters.ToList()
+                        group Hamster by Hamster into HamsterGroup
+                        orderby HamsterGroup.Key.Logs.Count ascending
+                        select new { HamsterId = HamsterGroup.Key.Id, HamsterName = HamsterGroup.Key.Name, Hamsterlogs = HamsterGroup.Key.Logs.Where(l => l.Activity == Activity.Exercise).Count() };
+
+            foreach (var group in query)
+            {
+                Console.WriteLine(group.HamsterId + " " + group.HamsterName + " " + group.Hamsterlogs);
+            }
+
+            //var hamsterQuery = dbContext.Hamsters.ToList()
+            //    .GroupBy(h => h)
+            //    .Select(g => new {
+            //        Hamster = g.Key,
+            //        ExerciseCount = g.Key.Logs
+            //    .Where(l => l.Activity == Activity.Exercise).Count()
+            //    });
         }
     }
 }
