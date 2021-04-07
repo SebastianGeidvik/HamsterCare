@@ -11,11 +11,26 @@ namespace BackEnd
     {
         public static void CreateDatabase()
         {
+            WipeLogs();
             ImportHamsters();
             CreateCages();
             CreateExerciseCage();
         }
-        public static void ImportHamsters()
+
+        private static void WipeLogs()
+        {
+            var dbContext = new DaycareContext();
+            if (dbContext.Logs.Count() > 0)
+            {
+                foreach (var log in dbContext.Logs)
+                {
+                    dbContext.Remove(log);
+                }
+            }
+            dbContext.SaveChanges();
+        }
+
+        private static void ImportHamsters()
         {
             var dbContext = new DaycareContext();
             if (dbContext.Hamsters.Count() == 0)
@@ -44,7 +59,7 @@ namespace BackEnd
                 }
             }
         }
-        public static void CreateCages()
+        private static void CreateCages()
         {
             var dbContext = new DaycareContext();
 
@@ -57,7 +72,7 @@ namespace BackEnd
             }
             dbContext.SaveChanges();
         }
-        public static void CreateExerciseCage()
+        private static void CreateExerciseCage()
         {
             var dbContext = new DaycareContext();
             if (dbContext.ExerciseCages.Count() == 0)
