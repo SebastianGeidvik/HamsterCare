@@ -58,5 +58,59 @@ namespace Simulator
             dbContext.Hamsters.ToList().ForEach(h => h.Logs.Add(new Log(Simulator.Date, Activity.Departure)));
             dbContext.SaveChanges();
         }
+        public static void Exercise()
+        {
+            var dbContext = new DaycareContext();
+
+            var query = from Hamster in dbContext.Hamsters.ToList()
+                        group Hamster by Hamster into HamsterGroup
+                        orderby HamsterGroup.Key.Logs.Count ascending
+                        select new { Hamster = HamsterGroup.Key, ExerciseCount = HamsterGroup.Key.Logs.Where(l => l.Activity == Activity.Exercise).Count() };
+
+            var exerciseCage = dbContext.ExerciseCages.First();
+            Gender gender = Gender.Unspecified;
+            int counter = 0;
+
+            foreach (var group in query)
+            {
+                if (counter == 0)
+                {
+                    gender = group.Hamster.Gender;
+                }
+                if (group.Hamster.Gender == gender && counter < 6)
+                {
+                    foreach (var cage in dbContext.Cages)
+                    {
+                        foreach (var hamster in dbContext.Hamsters)
+                        {
+                            if (hamster == group.Hamster)
+                            {
+                                cage.Hamsters.Remove(hamster);
+                            }
+                        }
+                    }
+                    exerciseCage.Hamsters.Add(group.Hamster);
+                    group.Hamster.Logs.Add(new Log(Simulator.Date, Activity.Exercise));
+                    counter++;
+                }
+            }
+            dbContext.SaveChanges();
+        }
+        public static void GoToCage()
+        {
+            var dbContext = new DaycareContext();
+
+            foreach (var cage in dbContext.ExerciseCages)
+            {
+                foreach (var hamster in cage.Hamsters)
+                {
+                    var freeCage = dbContext.Cages.First(c => c.Hamsters.Count < 3);
+                    freeCage.Hamsters.Add(hamster);
+                    hamster.Logs.Add(new Log(Simulator.Date, Activity.InCage));
+                    cage.Hamsters.Remove(hamster);
+                }
+            }
+            dbContext.SaveChanges();
+        }
     }
 }

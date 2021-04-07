@@ -49,9 +49,58 @@ namespace Simulator
             {
                 Operations.FillCages();
             }
+            if (TickCounter == 1)
+            {
+                Operations.Exercise();
+            }
+            if (TickCounter == 10)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
+            if (TickCounter == 20)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
+            if (TickCounter == 30)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
+            if (TickCounter == 40)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
+            if (TickCounter == 50)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
+            if (TickCounter == 60)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
+            if (TickCounter == 70)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
+            if (TickCounter == 80)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
+            if (TickCounter == 90)
+            {
+                Operations.GoToCage();
+                Operations.Exercise();
+            }
             if (TickCounter == 100)
             {
-                ExerciseCage.GoToCage();
+                Operations.GoToCage();
                 Operations.CheckOutHamsters();
             }
             Console.WriteLine($"Ticks: {TickCounter} Date: {Date}");

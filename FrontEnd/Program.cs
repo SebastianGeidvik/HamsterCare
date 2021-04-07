@@ -10,7 +10,7 @@ namespace FrontEnd
         static void Main(string[] args)
         {
             StartUpDatabase.CreateDatabase();
-            var simulator = new Simulator.Simulator(100, 2);
+            var simulator = new Simulator.Simulator(10, 2);
             simulator.RunSimulator();
             Console.ReadKey();
         }
