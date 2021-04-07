@@ -38,10 +38,13 @@ namespace FrontEnd
                 Console.ReadKey();
                 Simulator();
             }
-            Console.Clear();
-            var simulator = new Simulator.Simulator(speed, days);
-            simulator.RunSimulator();
-            Console.ReadKey();
+            else
+            {
+                Console.Clear();
+                var simulator = new Simulator.Simulator(speed, days);
+                simulator.RunSimulator();
+                Console.ReadKey();
+            }
         }
     }
 }
