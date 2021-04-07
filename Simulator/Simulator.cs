@@ -9,11 +9,12 @@ namespace Simulator
 {
     public class Simulator
     {
-        public int TickCounter { get; set; }
+        public static int TickCounter { get; set; }
         public static DateTime Date { get; set; }
         public int SleepTime { get; set; }
         public int InputDay { get; set; }
         public int DaysPassed { get; set; }
+        public static int TotalTicks { get; set; }
         public Simulator(int sleepTime, int days)
         {
             TickCounter = 0;
@@ -22,6 +23,7 @@ namespace Simulator
             SleepTime = sleepTime;
             InputDay = days;
             DaysPassed = 0;
+            TotalTicks = days * 101;
         }
         public void RunSimulator()
         {
@@ -48,9 +50,6 @@ namespace Simulator
             if (TickCounter == 0)
             {
                 Operations.FillCages();
-            }
-            if (TickCounter == 1)
-            {
                 Operations.Exercise();
             }
             if (TickCounter == 10)
@@ -103,7 +102,26 @@ namespace Simulator
                 Operations.GoToCage();
                 Operations.CheckOutHamsters();
             }
-            Console.WriteLine($"Ticks: {TickCounter} Date: {Date}");
+            LogTickActivity();
+        }
+        private void LogTickActivity()
+        {
+            var dbContext = new DaycareContext();
+            foreach (var cage in dbContext.Cages)
+            {
+                foreach (var hamster in cage.Hamsters)
+                {
+                    hamster.Logs.Add(new Log(Date, Activity.InCage));
+                }
+            }
+            foreach (var cage in dbContext.ExerciseCages)
+            {
+                foreach (var hamster in cage.Hamsters)
+                {
+                    hamster.Logs.Add(new Log(Date, Activity.Exercise));
+                }
+            }
+            dbContext.SaveChanges();
         }
     }
 }

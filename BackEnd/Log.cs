@@ -8,7 +8,7 @@ namespace BackEnd
 {
     public enum Activity
     {
-        Arrival, Exercise, InCage, Departure
+        Arrival, Exercise, InCage, Departure,
     }
     public class Log
     {

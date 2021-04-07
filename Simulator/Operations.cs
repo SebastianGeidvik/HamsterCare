@@ -64,9 +64,9 @@ namespace Simulator
 
             var query = from Hamster in dbContext.Hamsters.ToList()
                         group Hamster by Hamster into HamsterGroup
-                        orderby HamsterGroup.Key.Logs.Count ascending
                         select new { Hamster = HamsterGroup.Key, ExerciseCount = HamsterGroup.Key.Logs.Where(l => l.Activity == Activity.Exercise).Count() };
 
+            query = query.ToList().OrderBy(h => h.ExerciseCount);
             var exerciseCage = dbContext.ExerciseCages.First();
             Gender gender = Gender.Unspecified;
             int counter = 0;
@@ -90,7 +90,7 @@ namespace Simulator
                         }
                     }
                     exerciseCage.Hamsters.Add(group.Hamster);
-                    group.Hamster.Logs.Add(new Log(Simulator.Date, Activity.Exercise));
+                    //group.Hamster.Logs.Add(new Log(Simulator.Date, Activity.Exercise));
                     counter++;
                 }
             }
@@ -106,7 +106,7 @@ namespace Simulator
                 {
                     var freeCage = dbContext.Cages.First(c => c.Hamsters.Count < 3);
                     freeCage.Hamsters.Add(hamster);
-                    hamster.Logs.Add(new Log(Simulator.Date, Activity.InCage));
+                    //hamster.Logs.Add(new Log(Simulator.Date, Activity.InCage));
                     cage.Hamsters.Remove(hamster);
                 }
             }
