@@ -74,20 +74,12 @@ namespace FrontEnd
                 {
                     Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
                     Console.WriteLine();
-                    var counter = 2;
+                    Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise".PadRight(35) + $"Exercised number of times");
+                    Console.WriteLine();
 
                     foreach (var log in getLogs)
                     {
-                        if (counter % 2 == 1)
-                        {
-                            Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Activity}");
-                            counter++;
-                        }
-                        else if (counter % 2 == 0)
-                        {
-                            Console.Write($"{log.Hamster.Name}".PadRight(15) + $"{log.Activity}".PadRight(15));
-                            counter++;
-                        }
+                        Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}");
                     }
                     if (dateTime.Hour == 17)
                     {
