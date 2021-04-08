@@ -14,7 +14,6 @@ namespace FrontEnd
             StartUpDatabase.CreateDatabase();
             MainMenu();
         }
-
         private static void MainMenu()
         {
             Console.Clear();
@@ -75,7 +74,6 @@ namespace FrontEnd
                 {
                     Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
                     Console.WriteLine();
-                    dateTime = dateTime.AddMinutes(6);
                     var counter = 2;
 
                     foreach (var log in getLogs)
@@ -90,6 +88,15 @@ namespace FrontEnd
                             Console.Write($"{log.Hamster.Name}".PadRight(15) + $"{log.Activity}".PadRight(15));
                             counter++;
                         }
+                    }
+                    if (dateTime.Hour == 17)
+                    {
+                        dateTime = dateTime.AddHours(14);
+                        tickCount = 0;
+                    }
+                    else
+                    {
+                        dateTime = dateTime.AddMinutes(6);
                     }
                     Console.WriteLine();
                 }

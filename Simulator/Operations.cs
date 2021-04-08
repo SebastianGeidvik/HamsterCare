@@ -36,6 +36,7 @@ namespace Simulator
                         var hamster = maleHamsterQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
                         hamster.Logs.Add(new Log(Simulator.Date, Activity.Arrival));
+                        hamster.CheckedIn = Simulator.Date; 
                     }
                 }
                 else
@@ -45,6 +46,7 @@ namespace Simulator
                         var hamster = femaleHamsterQueue.Dequeue();
                         cage.Hamsters.Add(hamster);
                         hamster.Logs.Add(new Log(Simulator.Date, Activity.Arrival));
+                        hamster.CheckedIn = Simulator.Date;
                     }
                 }
             }
@@ -56,6 +58,7 @@ namespace Simulator
             var dbContext = new DaycareContext();
             dbContext.Cages.ToList().ForEach(c => c.Hamsters.Clear());
             dbContext.Hamsters.ToList().ForEach(h => h.Logs.Add(new Log(Simulator.Date, Activity.Departure)));
+            dbContext.Hamsters.ToList().ForEach(h => h.CheckedIn = null);
             dbContext.SaveChanges();
         }
         public static void Exercise()

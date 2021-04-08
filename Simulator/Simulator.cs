@@ -14,7 +14,6 @@ namespace Simulator
         public int SleepTime { get; set; }
         public int InputDay { get; set; }
         public int DaysPassed { get; set; }
-        public static int TotalTicks { get; set; }
         public Simulator(int sleepTime, int days)
         {
             TickCounter = 0;
@@ -23,7 +22,6 @@ namespace Simulator
             SleepTime = sleepTime;
             InputDay = days;
             DaysPassed = 0;
-            TotalTicks = days * 101;
         }
         public void RunSimulator()
         {
