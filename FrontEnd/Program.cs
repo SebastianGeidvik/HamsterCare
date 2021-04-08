@@ -16,7 +16,7 @@ namespace FrontEnd
             MainMenu();
         }
 
-        
+
 
         private static void MainMenu()
         {
@@ -78,7 +78,7 @@ namespace FrontEnd
                 {
                     Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
                     Console.WriteLine();
-                    Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise".PadRight(35) + $"Exercised number of times");
+                    Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(15) + $"Exercised number of times");
                     Console.WriteLine();
                     var count = 2;
                     foreach (var log in getLogs)
@@ -86,7 +86,8 @@ namespace FrontEnd
                         if (count % 2 == 0)
                         {
                             int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
-                            Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(50) + $"{numberOftimesExercised}");
+                            var hours = TimeWaitingForExercise(log.Hamster, dateTime);
+                            Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{hours}".PadRight(35) + $"{numberOftimesExercised}");
                         }
                         else
                         {
@@ -109,13 +110,14 @@ namespace FrontEnd
                 {
                     Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
                     Console.WriteLine();
-                    Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise".PadRight(35) + $"Exercised number of times");
+                    Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
                     Console.WriteLine();
 
                     foreach (var log in getLogs)
                     {
                         int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
-                        Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(50) + $"{numberOftimesExercised}");
+                        var hours = TimeWaitingForExercise(log.Hamster, dateTime);
+                        Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(35) + $"{hours}".PadRight(15) + $"{numberOftimesExercised}");
                     }
                     if (dateTime.Hour == 17)
                     {
@@ -128,6 +130,21 @@ namespace FrontEnd
                     }
                     Console.WriteLine();
                 }
+            }
+        }
+        private static int TimeWaitingForExercise(Hamster hamster, DateTime dateTime)
+        {
+            var logList = hamster.Logs.Where(h => h.Activity == Activity.Exercise).ToList().OrderBy(l => l.TimeStamp);
+            var checkInTime = new TimeSpan(7, 0, 0);
+            if (logList.Any())
+            {
+                var timeWaited = logList.First().TimeStamp.TimeOfDay - checkInTime;
+                return timeWaited.Minutes;
+            }
+            else
+            {
+                var timeStillWaiting = dateTime.TimeOfDay - checkInTime;
+                return timeStillWaiting.Minutes;
             }
         }
     }
