@@ -12,6 +12,7 @@ namespace FrontEnd
         static void Main(string[] args)
         {
             StartUpDatabase.CreateDatabase();
+            //Console.WriteLine(ExerciseCount());
             MainMenu();
         }
         private static void MainMenu()
@@ -70,6 +71,7 @@ namespace FrontEnd
             {
                 Thread.Sleep(_printSpeed);
                 var getLogs = dbContext.Logs.Where(l => l.TimeStamp == dateTime).OrderBy(h => h.Hamster.Name);
+
                 if (getLogs.Count() > 1)
                 {
                     Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
@@ -79,7 +81,8 @@ namespace FrontEnd
 
                     foreach (var log in getLogs)
                     {
-                        Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}");
+                        int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise).Count();
+                        Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(50) + $"{numberOftimesExercised}");
                     }
                     if (dateTime.Hour == 17)
                     {
