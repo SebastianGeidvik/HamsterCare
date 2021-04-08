@@ -44,10 +44,10 @@ namespace FrontEnd
             Console.Write("Enter print speed (milliseconds): ");
             int.TryParse(Console.ReadLine(), out int printSpeed);
             _printSpeed = printSpeed;
-            if (printSpeed < 1 || printSpeed > 2000)
+            if (printSpeed < tickSpeed)
             {
                 Console.Clear();
-                Console.WriteLine("To slow. Try again.");
+                Console.WriteLine("Print speed can't be lower than tick speed. Try again.");
                 Console.WriteLine("Press any key.");
                 Console.ReadKey();
                 MainMenu();
