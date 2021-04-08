@@ -15,6 +15,9 @@ namespace FrontEnd
             //Console.WriteLine(ExerciseCount());
             MainMenu();
         }
+
+        
+
         private static void MainMenu()
         {
             Console.Clear();
@@ -70,9 +73,39 @@ namespace FrontEnd
             while (true)
             {
                 Thread.Sleep(_printSpeed);
-                var getLogs = dbContext.Logs.Where(l => l.TimeStamp == dateTime).OrderBy(h => h.Hamster.Name);
-
-                if (getLogs.Count() > 1)
+                var getLogs = dbContext.Logs.Where(l => l.TimeStamp == dateTime).OrderBy(h => h.Hamster.Name).ThenBy(h => h.Activity).ToList();
+                if (getLogs.Count() == 60 && tickCount == 0)
+                {
+                    Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
+                    Console.WriteLine();
+                    Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise".PadRight(35) + $"Exercised number of times");
+                    Console.WriteLine();
+                    var count = 2;
+                    foreach (var log in getLogs)
+                    {
+                        if (count % 2 == 0)
+                        {
+                            int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
+                            Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(50) + $"{numberOftimesExercised}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"".PadRight(30) + $"{log.Activity}");
+                        }
+                        count++;
+                    }
+                    if (dateTime.Hour == 17)
+                    {
+                        dateTime = dateTime.AddHours(14);
+                        tickCount = 0;
+                    }
+                    else
+                    {
+                        dateTime = dateTime.AddMinutes(6);
+                    }
+                    Console.WriteLine();
+                }
+                else if (getLogs.Count() > 1 && tickCount > 0)
                 {
                     Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
                     Console.WriteLine();
@@ -81,7 +114,7 @@ namespace FrontEnd
 
                     foreach (var log in getLogs)
                     {
-                        int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise).Count();
+                        int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
                         Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(50) + $"{numberOftimesExercised}");
                     }
                     if (dateTime.Hour == 17)

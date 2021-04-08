@@ -49,6 +49,7 @@ namespace Simulator
             {
                 Operations.FillCages();
                 Operations.Exercise();
+
             }
             if (TickCounter == 10)
             {
