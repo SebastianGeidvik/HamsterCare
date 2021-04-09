@@ -12,7 +12,6 @@ namespace FrontEnd
         static void Main(string[] args)
         {
             StartUpDatabase.CreateDatabase();
-            //Console.WriteLine(ExerciseCount());
             MainMenu();
         }
 
@@ -76,7 +75,7 @@ namespace FrontEnd
                 var getLogs = dbContext.Logs.Where(l => l.TimeStamp == dateTime).OrderBy(h => h.Hamster.Name).ThenBy(h => h.Activity).ToList();
                 if (getLogs.Count() == 60 && tickCount == 0)
                 {
-                    Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
+                    Console.WriteLine($"Tick: {tickCount++}".PadRight(15) + $"{dateTime}");
                     Console.WriteLine();
                     Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
                     Console.WriteLine();
@@ -108,7 +107,7 @@ namespace FrontEnd
                 }
                 else if (getLogs.Count() > 1 && tickCount > 0)
                 {
-                    Console.WriteLine($"Ticker: {tickCount++}".PadRight(15) + $"{dateTime}");
+                    Console.WriteLine($"Tick: {tickCount++}".PadRight(15) + $"{dateTime}");
                     Console.WriteLine();
                     Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
                     Console.WriteLine();
