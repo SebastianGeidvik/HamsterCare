@@ -3,12 +3,14 @@ using System;
 using System.Linq;
 using Simulator;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace FrontEnd
 {
     class Program
     {
         private static int _printSpeed;
+        private static bool _printerActive;
         static void Main(string[] args)
         {
             StartUpDatabase.CreateDatabase();
@@ -56,11 +58,42 @@ namespace FrontEnd
                 Console.Clear();
                 var simulator = new Simulator.Simulator(tickSpeed, days);
                 simulator.RunSimulator();
+                ReadingInput();
                 Print();
             }
         }
+
+        private static void ReadingInput()
+        {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    var input = Console.ReadKey(true);
+                    if (input.Key == ConsoleKey.Spacebar)
+                    {
+                        if (_printerActive == true)
+                        {
+                            _printerActive = false;
+                            //Simulator.Simulator.IsActive = false;
+                        }
+                        else if (_printerActive == false)
+                        {
+                            //Simulator.Simulator.IsActive = true;
+                            _printerActive = true;
+                        }
+                    }
+                    if (input.Key == ConsoleKey.Escape)
+                    {
+
+                    }
+                }
+            });
+        }
+
         private static void Print()
         {
+            _printerActive = true;
             var dbContext = new DaycareContext();
             var nowDate = DateTime.Now;
             var dateTime = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day, 7, 0, 0);
@@ -68,63 +101,66 @@ namespace FrontEnd
 
             while (true)
             {
-                Thread.Sleep(_printSpeed);
-                var getLogs = dbContext.Logs.Where(l => l.TimeStamp == dateTime).OrderBy(h => h.Hamster.Name).ThenBy(h => h.Activity).ToList();
-                if (getLogs.Count() == 60 && tickCount == 0)
+                while (_printerActive)
                 {
-                    Console.WriteLine($"Tick: {tickCount++}".PadRight(15) + $"{dateTime}");
-                    Console.WriteLine();
-                    Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
-                    Console.WriteLine();
-                    var count = 2;
-                    foreach (var log in getLogs)
+                    Thread.Sleep(_printSpeed);
+                    var getLogs = dbContext.Logs.Where(l => l.TimeStamp == dateTime).OrderBy(h => h.Hamster.Name).ThenBy(h => h.Activity).ToList();
+                    if (getLogs.Count() == 60 && tickCount == 0)
                     {
-                        if (count % 2 == 0)
+                        Console.WriteLine($"Tick: {tickCount++}".PadRight(15) + $"{dateTime}");
+                        Console.WriteLine();
+                        Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
+                        Console.WriteLine();
+                        var count = 2;
+                        foreach (var log in getLogs)
+                        {
+                            if (count % 2 == 0)
+                            {
+                                int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
+                                var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
+                                Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"".PadRight(30) + $"{log.Activity}");
+                            }
+                            count++;
+                        }
+                        if (dateTime.Hour == 17)
+                        {
+                            dateTime = dateTime.AddHours(14);
+                            tickCount = 0;
+                        }
+                        else
+                        {
+                            dateTime = dateTime.AddMinutes(6);
+                        }
+                        Console.WriteLine();
+                    }
+                    else if (getLogs.Count() > 1 && tickCount > 0)
+                    {
+                        Console.WriteLine($"Tick: {tickCount++}".PadRight(15) + $"{dateTime}");
+                        Console.WriteLine();
+                        Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
+                        Console.WriteLine();
+
+                        foreach (var log in getLogs)
                         {
                             int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
                             var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
                             Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
                         }
-                        else
-                        { 
-                            Console.WriteLine($"".PadRight(30) + $"{log.Activity}");
+                        if (dateTime.Hour == 17)
+                        {
+                            dateTime = dateTime.AddHours(14);
+                            tickCount = 0;
                         }
-                        count++;
+                        else
+                        {
+                            dateTime = dateTime.AddMinutes(6);
+                        }
+                        Console.WriteLine();
                     }
-                    if (dateTime.Hour == 17)
-                    {
-                        dateTime = dateTime.AddHours(14);
-                        tickCount = 0;
-                    }
-                    else
-                    {
-                        dateTime = dateTime.AddMinutes(6);
-                    }
-                    Console.WriteLine();
-                }
-                else if (getLogs.Count() > 1 && tickCount > 0)
-                {
-                    Console.WriteLine($"Tick: {tickCount++}".PadRight(15) + $"{dateTime}");
-                    Console.WriteLine();
-                    Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
-                    Console.WriteLine();
-
-                    foreach (var log in getLogs)
-                    {
-                        int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
-                        var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
-                        Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
-                    }
-                    if (dateTime.Hour == 17)
-                    {
-                        dateTime = dateTime.AddHours(14);
-                        tickCount = 0;
-                    }
-                    else
-                    {
-                        dateTime = dateTime.AddMinutes(6);
-                    }
-                    Console.WriteLine();
                 }
             }
         }

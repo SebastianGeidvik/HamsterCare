@@ -9,6 +9,7 @@ namespace Simulator
 {
     public class Simulator
     {
+        public static bool IsActive { get; set; }
         public static int TickCounter { get; set; }
         public static DateTime Date { get; set; }
         public int SleepTime { get; set; }
@@ -29,16 +30,19 @@ namespace Simulator
             {
                 while (InputDay > DaysPassed)
                 {
-                    Thread.Sleep(SleepTime);
-                    OnTick();
-                    TickCounter++;
-                    Date = Date.AddMinutes(6);
-                    if (TickCounter == 101)
-                    {
-                        DaysPassed++;
-                        TickCounter = 0;
-                        var nowDate = DateTime.Now;
-                        Date = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day, 7, 0, 0).AddDays(DaysPassed);
+                    //while (IsActive)
+                    //{
+                        Thread.Sleep(SleepTime);
+                        OnTick();
+                        TickCounter++;
+                        Date = Date.AddMinutes(6);
+                        if (TickCounter == 101)
+                        {
+                            DaysPassed++;
+                            TickCounter = 0;
+                            var nowDate = DateTime.Now;
+                            Date = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day, 7, 0, 0).AddDays(DaysPassed);
+                        //}
                     }
                 }
             });
@@ -49,7 +53,6 @@ namespace Simulator
             {
                 Operations.FillCages();
                 Operations.Exercise();
-
             }
             if (TickCounter == 10)
             {
