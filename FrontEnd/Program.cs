@@ -14,9 +14,6 @@ namespace FrontEnd
             StartUpDatabase.CreateDatabase();
             MainMenu();
         }
-
-
-
         private static void MainMenu()
         {
             Console.Clear();
@@ -85,8 +82,8 @@ namespace FrontEnd
                         if (count % 2 == 0)
                         {
                             int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
-                            var min = TimeWaitingForExercise(log.Hamster, dateTime);
-                            Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{min}".PadRight(35) + $"{numberOftimesExercised}");
+                            var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
+                            Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
                         }
                         else
                         { 
@@ -115,8 +112,8 @@ namespace FrontEnd
                     foreach (var log in getLogs)
                     {
                         int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
-                        var hours = TimeWaitingForExercise(log.Hamster, dateTime);
-                        Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{hours}".PadRight(35) + $"{numberOftimesExercised}");
+                        var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
+                        Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
                     }
                     if (dateTime.Hour == 17)
                     {
@@ -138,12 +135,14 @@ namespace FrontEnd
             if (logList.Any())
             {
                 var timeWaited = logList.First().TimeStamp.TimeOfDay - checkInTime;
-                return timeWaited.Minutes;
+                var totalTimeWaiting = timeWaited.TotalMinutes;
+                return (int)totalTimeWaiting;
             }
             else
             {
                 var timeStillWaiting = dateTime.TimeOfDay - checkInTime;
-                return timeStillWaiting.Minutes;
+                var totalTimeStillWaiting = timeStillWaiting.TotalMinutes;
+                return (int)totalTimeStillWaiting;
             }
         }
     }
