@@ -96,7 +96,6 @@ namespace FrontEnd
             var nowDate = DateTime.Now;
             var dateTime = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day, 7, 0, 0);
             var tickCount = 0;
-
             while (true)
             {
                 while (_printerActive)
@@ -164,7 +163,7 @@ namespace FrontEnd
         }
         private static int TimeWaitingForExercise(Hamster hamster, DateTime dateTime)
         {
-            var logList = hamster.Logs.Where(h => h.Activity == Activity.Exercise).ToList().OrderBy(l => l.TimeStamp);
+            var logList = hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp.Day == dateTime.Day).ToList().OrderBy(l => l.TimeStamp);
             var checkInTime = new TimeSpan(7, 0, 0);
 
             if (logList.Any())

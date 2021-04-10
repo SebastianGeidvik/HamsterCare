@@ -13,13 +13,13 @@ namespace BackEnd
         {
             var dbContext = new DaycareContext();
             dbContext.Database.EnsureCreated();
-            WipeLogs();
+            ResetLogsAndHamsters();
             ImportHamsters();
             CreateCages();
             CreateExerciseCage();
         }
 
-        private static void WipeLogs()
+        private static void ResetLogsAndHamsters()
         {
             var dbContext = new DaycareContext();
             if (dbContext.Logs.Count() > 0)
@@ -29,6 +29,9 @@ namespace BackEnd
                     dbContext.Remove(log);
                 }
             }
+            dbContext.Cages.ToList().ForEach(c => c.Hamsters.Clear());
+            dbContext.ExerciseCages.First().Hamsters.Clear();
+            dbContext.Hamsters.ToList().ForEach(h => h.CheckedIn = null);
             dbContext.SaveChanges();
         }
 

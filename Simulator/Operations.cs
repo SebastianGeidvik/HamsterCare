@@ -57,6 +57,7 @@ namespace Simulator
         {
             var dbContext = new DaycareContext();
             dbContext.Cages.ToList().ForEach(c => c.Hamsters.Clear());
+            dbContext.ExerciseCages.First().Hamsters.Clear();
             dbContext.Hamsters.ToList().ForEach(h => h.Logs.Add(new Log(Simulator.Date, Activity.Departure)));
             dbContext.Hamsters.ToList().ForEach(h => h.CheckedIn = null);
             dbContext.SaveChanges();
