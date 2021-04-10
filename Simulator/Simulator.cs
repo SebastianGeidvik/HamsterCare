@@ -26,25 +26,25 @@ namespace Simulator
         }
         public void RunSimulator()
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 while (InputDay > DaysPassed)
                 {
-                        Thread.Sleep(SleepTime);
-                        OnTick();
-                        TickCounter++;
-                        Date = Date.AddMinutes(6);
-                        if (TickCounter == 101)
-                        {
-                            DaysPassed++;
-                            TickCounter = 0;
-                            var nowDate = DateTime.Now;
-                            Date = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day, 7, 0, 0).AddDays(DaysPassed);
+                    Thread.Sleep(SleepTime);
+                    await OnTick();
+                    TickCounter++;
+                    Date = Date.AddMinutes(6);
+                    if (TickCounter == 101)
+                    {
+                        DaysPassed++;
+                        TickCounter = 0;
+                        var nowDate = DateTime.Now;
+                        Date = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day, 7, 0, 0).AddDays(DaysPassed);
                     }
                 }
             });
         }
-        public void OnTick()
+        public async Task OnTick()
         {
             if (TickCounter == 0)
             {
@@ -101,26 +101,29 @@ namespace Simulator
                 Operations.GoToCage();
                 Operations.CheckOutHamsters();
             }
-            LogTickActivity();
+            await LogTickActivity();
         }
-        private void LogTickActivity()
+        private async Task LogTickActivity()
         {
-            var dbContext = new DaycareContext();
-            foreach (var cage in dbContext.Cages)
+            await Task.Run(() =>
             {
-                foreach (var hamster in cage.Hamsters)
+                var dbContext = new DaycareContext();
+                foreach (var cage in dbContext.Cages)
                 {
-                    hamster.Logs.Add(new Log(Date, Activity.InCage));
+                    foreach (var hamster in cage.Hamsters)
+                    {
+                        hamster.Logs.Add(new Log(Date, Activity.InCage));
+                    }
                 }
-            }
-            foreach (var cage in dbContext.ExerciseCages)
-            {
-                foreach (var hamster in cage.Hamsters)
+                foreach (var cage in dbContext.ExerciseCages)
                 {
-                    hamster.Logs.Add(new Log(Date, Activity.Exercise));
+                    foreach (var hamster in cage.Hamsters)
+                    {
+                        hamster.Logs.Add(new Log(Date, Activity.Exercise));
+                    }
                 }
-            }
-            dbContext.SaveChanges();
+                dbContext.SaveChanges();
+            });
         }
     }
 }
