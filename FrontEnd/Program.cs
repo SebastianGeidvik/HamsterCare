@@ -74,11 +74,9 @@ namespace FrontEnd
                         if (_printerActive == true)
                         {
                             _printerActive = false;
-                            //Simulator.Simulator.IsActive = false;
                         }
                         else if (_printerActive == false)
                         {
-                            //Simulator.Simulator.IsActive = true;
                             _printerActive = true;
                         }
                     }
