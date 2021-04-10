@@ -145,10 +145,6 @@ namespace FrontEnd
                         foreach (var log in getLogs)
                         {
                             int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp >= dateTime.Date).Count() / 10;
-                            if (tickCount == 0)
-                            {
-                                numberOftimesExercised = 0;
-                            }
                             var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
                             Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
                         }
@@ -170,6 +166,7 @@ namespace FrontEnd
         {
             var logList = hamster.Logs.Where(h => h.Activity == Activity.Exercise).ToList().OrderBy(l => l.TimeStamp);
             var checkInTime = new TimeSpan(7, 0, 0);
+
             if (logList.Any())
             {
                 var timeWaited = logList.First().TimeStamp.TimeOfDay - checkInTime;
