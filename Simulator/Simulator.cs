@@ -30,8 +30,6 @@ namespace Simulator
             {
                 while (InputDay > DaysPassed)
                 {
-                    //while (IsActive)
-                    //{
                         Thread.Sleep(SleepTime);
                         OnTick();
                         TickCounter++;
@@ -42,7 +40,6 @@ namespace Simulator
                             TickCounter = 0;
                             var nowDate = DateTime.Now;
                             Date = new DateTime(nowDate.Year, nowDate.Month, nowDate.Day, 7, 0, 0).AddDays(DaysPassed);
-                        //}
                     }
                 }
             });

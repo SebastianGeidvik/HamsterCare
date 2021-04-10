@@ -62,7 +62,6 @@ namespace FrontEnd
                 Print();
             }
         }
-
         private static void ReadingInput()
         {
             Task.Run(() =>
@@ -90,7 +89,6 @@ namespace FrontEnd
                 }
             });
         }
-
         private static void Print()
         {
             _printerActive = true;
@@ -116,7 +114,7 @@ namespace FrontEnd
                         {
                             if (count % 2 == 0)
                             {
-                                int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
+                                int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp >= dateTime.Date).Count() / 10;
                                 var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
                                 Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
                             }
@@ -146,7 +144,11 @@ namespace FrontEnd
 
                         foreach (var log in getLogs)
                         {
-                            int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp <= dateTime).Count() / 10;
+                            int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp >= dateTime.Date).Count() / 10;
+                            if (tickCount == 0)
+                            {
+                                numberOftimesExercised = 0;
+                            }
                             var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
                             Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
                         }

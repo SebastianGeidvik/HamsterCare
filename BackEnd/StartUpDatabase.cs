@@ -11,6 +11,8 @@ namespace BackEnd
     {
         public static void CreateDatabase()
         {
+            var dbContext = new DaycareContext();
+            dbContext.Database.EnsureCreated();
             WipeLogs();
             ImportHamsters();
             CreateCages();
