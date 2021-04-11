@@ -62,7 +62,7 @@ namespace FrontEnd
                 Print();
             }
         }
-        private static void ReadingInput()
+        private static void ReadingInput() // A paus function running on a seperate thread.
         {
             Task.Run(() =>
             {
@@ -79,6 +79,10 @@ namespace FrontEnd
                         {
                             _printerActive = true;
                         }
+                    }
+                    if (input.Key == ConsoleKey.Escape)
+                    {
+                        Environment.Exit(0);
                     }
                 }
             });
