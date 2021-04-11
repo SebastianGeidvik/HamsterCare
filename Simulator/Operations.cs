@@ -9,7 +9,7 @@ namespace Simulator
 {
     internal class Operations
     {
-        public static async Task FillCages()
+        public static async Task FillCages() // Method for filling cages with hamsters. Seperates females from males and putts them in two different queues.
         {
             await Task.Run (() =>
             {
@@ -56,7 +56,7 @@ namespace Simulator
                 return true;
             });
         }
-        public static async Task CheckOutHamsters()
+        public static async Task CheckOutHamsters() // Method to check out the hamsters from the daycare.
         {
             await Task.Run(() =>
             {
@@ -68,7 +68,8 @@ namespace Simulator
                 dbContext.SaveChanges();
             });
         }
-        public static async Task Exercise()
+        public static async Task Exercise() // Method for getting hamsters from their cage to exercise cage.
+                                            // Checks number of times the hamsters has been exercising and picks the hamster who's been exercising least.
         {
             await Task.Run(() =>
             {
@@ -108,7 +109,7 @@ namespace Simulator
                 dbContext.SaveChanges();
             });
         }
-        public static async Task GoToCage()
+        public static async Task GoToCage() // Method for getting the hamsters back to their cage from Exercise cage.
         {
             await Task.Run(() =>
             {

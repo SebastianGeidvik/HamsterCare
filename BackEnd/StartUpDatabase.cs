@@ -9,7 +9,7 @@ namespace BackEnd
 {
     public class StartUpDatabase
     {
-        public static void CreateDatabase()
+        public static void CreateDatabase() // Checks if database does exists, if not it generates it.
         {
             var dbContext = new DaycareContext();
             dbContext.Database.EnsureCreated();
@@ -19,7 +19,7 @@ namespace BackEnd
             ResetLogsAndHamsters();
         }
 
-        private static void ResetLogsAndHamsters()
+        private static void ResetLogsAndHamsters() // Removes logs and if they are in cages they will get cleared from that.
         {
             var dbContext = new DaycareContext();
             if (dbContext.Logs.Count() > 0)
@@ -35,7 +35,7 @@ namespace BackEnd
             dbContext.SaveChanges();
         }
 
-        private static void ImportHamsters()
+        private static void ImportHamsters() // Imports data from a CSV-file into the datebase.
         {
             var dbContext = new DaycareContext();
             if (dbContext.Hamsters.Count() == 0)
@@ -69,7 +69,7 @@ namespace BackEnd
                 }
             }
         }
-        private static void CreateCages()
+        private static void CreateCages() // Creates 10 cages into the database.
         {
             var dbContext = new DaycareContext();
 
@@ -82,7 +82,7 @@ namespace BackEnd
             }
             dbContext.SaveChanges();
         }
-        private static void CreateExerciseCage()
+        private static void CreateExerciseCage() // Creates a exercisecage into the database.
         {
             var dbContext = new DaycareContext();
             if (dbContext.ExerciseCages.Count() == 0)

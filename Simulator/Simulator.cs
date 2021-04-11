@@ -24,7 +24,7 @@ namespace Simulator
             InputDay = days;
             DaysPassed = 0;
         }
-        public void RunSimulator()
+        public void RunSimulator() // A method for starting the simulator. Runs on a seprate thread and makes the days tick depending on the input from the user.
         {
             Task.Run(async () =>
             {
@@ -44,7 +44,7 @@ namespace Simulator
                 }
             });
         }
-        public async Task OnTick()
+        public async Task OnTick() // This method runs on every tick and the methods inside it runs asynchronously. 
         {
             if (TickCounter == 0)
             {
@@ -103,7 +103,7 @@ namespace Simulator
             }
             await LogTickActivity();
         }
-        private async Task LogTickActivity()
+        private async Task LogTickActivity() // Logs hamsters on every tick.
         {
             await Task.Run(() =>
             {

@@ -87,7 +87,7 @@ namespace FrontEnd
                 }
             });
         }
-        private static void Print()
+        private static void Print() // A method that prints all info from the database log.
         {
             _printerActive = true;
             var dbContext = new DaycareContext();
@@ -159,7 +159,7 @@ namespace FrontEnd
                 }
             }
         }
-        private static int TimeWaitingForExercise(Hamster hamster, DateTime dateTime)
+        private static int TimeWaitingForExercise(Hamster hamster, DateTime dateTime) // Method for calculate how long Hamsters have been waiting for exercise.
         {
             var logList = hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp.Day == dateTime.Day).ToList().OrderBy(l => l.TimeStamp);
             var checkInTime = new TimeSpan(7, 0, 0);
