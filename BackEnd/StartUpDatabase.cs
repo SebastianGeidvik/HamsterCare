@@ -13,10 +13,10 @@ namespace BackEnd
         {
             var dbContext = new DaycareContext();
             dbContext.Database.EnsureCreated();
-            ResetLogsAndHamsters();
             ImportHamsters();
             CreateCages();
             CreateExerciseCage();
+            ResetLogsAndHamsters();
         }
 
         private static void ResetLogsAndHamsters()
