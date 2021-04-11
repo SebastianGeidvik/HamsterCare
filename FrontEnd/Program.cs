@@ -136,14 +136,14 @@ namespace FrontEnd
                     {
                         Console.WriteLine($"Tick: {tickCount++}".PadRight(15) + $"{dateTime}");
                         Console.WriteLine();
-                        Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
+                        Console.WriteLine($"Name".PadRight(15) + $"Age".PadRight(15) + $"Gender".PadRight(15) + $"Activity".PadRight(15) + $"Time waiting for exercise (min)".PadRight(35) + $"Exercised number of times");
                         Console.WriteLine();
 
                         foreach (var log in getLogs)
                         {
                             int numberOftimesExercised = log.Hamster.Logs.Where(l => l.Activity == Activity.Exercise && l.TimeStamp >= dateTime.Date).Count() / 10;
                             var minutes = TimeWaitingForExercise(log.Hamster, dateTime);
-                            Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
+                            Console.WriteLine($"{log.Hamster.Name}".PadRight(15) + $"{log.Hamster.Age}".PadRight(15) + $"{log.Hamster.Gender}".PadRight(15) + $"{log.Activity}".PadRight(15) + $"{minutes}".PadRight(35) + $"{numberOftimesExercised}");
                         }
                         if (dateTime.Hour == 17)
                         {
