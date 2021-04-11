@@ -40,7 +40,12 @@ namespace BackEnd
             var dbContext = new DaycareContext();
             if (dbContext.Hamsters.Count() == 0)
             {
-                var csvLines = File.ReadAllLines(@"..\net5.0\SeedFromFile\Hamsterlista30.csv");
+                var file = new DirectoryInfo(Directory.GetCurrentDirectory())
+                    .Parent.Parent.Parent.Parent.GetDirectories()
+                    .ToList().First(d => d.Name == "SeedFromFile").GetFiles()
+                    .First(f => f.Name == "Hamsterlista30.csv").FullName;
+
+                var csvLines = File.ReadAllLines(file);
 
                 foreach (var csvLine in csvLines)
                 {
