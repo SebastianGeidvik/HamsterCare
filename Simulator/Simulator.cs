@@ -48,58 +48,58 @@ namespace Simulator
         {
             if (TickCounter == 0)
             {
-                Operations.FillCages();
-                Operations.Exercise();
+                await Operations.FillCages();
+                await Operations.Exercise();
             }
             if (TickCounter == 10)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 20)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 30)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 40)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 50)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 60)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 70)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 80)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 90)
             {
-                Operations.GoToCage();
-                Operations.Exercise();
+                await Operations.GoToCage();
+                await Operations.Exercise();
             }
             if (TickCounter == 100)
             {
-                Operations.GoToCage();
-                Operations.CheckOutHamsters();
+                await Operations.GoToCage();
+                await Operations.CheckOutHamsters();
             }
             await LogTickActivity();
         }
